@@ -3,3 +3,7 @@ This directory is for the Full Stack Open - course provided by the University of
 
 
 ### Author: Taneli Manninen
+
+Here is some screenshots of different views of the app:
+
+![alt text](./pictures/FRONT_PAGE.png)
