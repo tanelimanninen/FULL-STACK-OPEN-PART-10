@@ -6,4 +6,18 @@ This directory is for the Full Stack Open - course provided by the University of
 
 Here is some screenshots of different views of the app:
 
+
+### Front Page View
 ![alt text](./pictures/FRONT_PAGE.png)
+
+### Single Repository View
+![alt text](./pictures/SINGLE_REPO.png)
+
+### Sign In View
+![alt text](./pictures/SIGN_IN.png)
+
+### Create Review View
+![alt text](./pictures/CREATE_REVIEW.png)
+
+### My Reviews View
+![alt text](./pictures/MY_REVIEWS.png)
