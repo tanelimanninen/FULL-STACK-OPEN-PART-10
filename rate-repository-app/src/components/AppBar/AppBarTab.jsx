@@ -5,7 +5,8 @@ import Text from '../Text';
 
 const styles = StyleSheet.create({
   tab: {
-    paddingStart: 12,
+    marginStart: 6,
+    marginEnd: 6
   },
 });
 

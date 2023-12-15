@@ -3,10 +3,12 @@ import { useQuery } from "@apollo/client";
 import { GET_ME } from "../graphql/queries";
 import useAuthStorage from "./useAuthStorage";
 
-const useMe = () => {
+const useMe = (includeReviews = false) => {
     const authStorage = useAuthStorage();
 
     const { loading, error, data } = useQuery(GET_ME, {
+        variables: { includeReviews },
+        fetchPolicy: 'cache-and-network',
         context: async ({ headers }) => {
           try {
             const accessToken = await authStorage.getAccessToken();

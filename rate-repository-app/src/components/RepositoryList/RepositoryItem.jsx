@@ -1,7 +1,10 @@
-import { View, StyleSheet, Image } from 'react-native';
+import { useNavigate } from "react-router-dom";
 
+import { View, StyleSheet, Image, Pressable } from 'react-native';
+
+import { formatNumber } from "../../functions";
+import { ratingNumber } from "../../functions";
 import theme from '../../theme';
-
 import Text from '../Text';
 
 
@@ -9,9 +12,11 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "column",
         flexGrow: 1,
-        padding: 10,
+        padding: 15,
         backgroundColor: theme.colors.cardBG,
-        borderRadius: 10 / 2
+        borderRadius: 10 / 2,
+        borderColor: theme.colors.borderCard,
+        borderWidth: 1
     },
     avatar: {
         width: 45,
@@ -49,18 +54,6 @@ const styles = StyleSheet.create({
         alignItems: "center"
     }
 });
-
-
-const formatNumber = (value) => {
-    if (value >= 1000) {
-      return `${(value / 1000).toFixed(1)}k`;
-    }
-    return value.toString();
-};
-
-const ratingNumber = (value) => {
-    return (value / 10);
-}
 
 
 const CardHeader = ({ image, name, description, language }) => {
@@ -108,22 +101,34 @@ const CardStats = ({ stars, forks, reviews, rating }) => {
 
 
 const RepositoryItem = ({ repository }) => {
-    return (
-        <View style={styles.container}>
-            <CardHeader 
-                image={repository.ownerAvatarUrl}
-                name={repository.fullName}
-                description={repository.description}
-                language={repository.language}
-            />
+    const navigate = useNavigate();
 
-            <CardStats
-                stars={repository.stargazersCount}
-                forks={repository.forksCount}
-                reviews={repository.reviewCount}
-                rating={repository.ratingAverage}
-            />
-        </View>
+    if (!repository) {
+        return <Text>Repository not found</Text>;
+    }
+
+    const handlePress = () => {
+        navigate(`/repository/${repository.id}`);
+    };
+
+    return (
+        <Pressable onPress={handlePress}>
+            <View style={styles.container} testID="repositoryItem">
+                <CardHeader 
+                    image={repository.ownerAvatarUrl}
+                    name={repository.fullName}
+                    description={repository.description}
+                    language={repository.language}
+                />
+
+                <CardStats
+                    stars={repository.stargazersCount}
+                    forks={repository.forksCount}
+                    reviews={repository.reviewCount}
+                    rating={repository.ratingAverage}
+                />
+            </View>
+        </Pressable>
     );
 };
 

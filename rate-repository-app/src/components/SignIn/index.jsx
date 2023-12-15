@@ -1,5 +1,5 @@
 import useSignIn from '../../hooks/useSignIn';
-import { View, StyleSheet, Pressable } from 'react-native';
+import { View, StyleSheet, Pressable, Alert } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useNavigate } from "react-router-dom";
@@ -38,7 +38,8 @@ const initialValues = {
 const validationSchema = yup.object().shape({
     username: yup.string().required('Username is required'),
     password: yup.string().required('Password is required'),
-  });
+});
+
 
 const SignIn = () => {
   const [signIn] = useSignIn();
@@ -51,11 +52,14 @@ const SignIn = () => {
     try {
       const { data } = await signIn({ username, password });
       console.log("Authentication successful", data);
+
+      navigate("/");
     } catch (e) {
       console.log("Error during authentication", e);
+      Alert.alert('Error', 'Failed to sign in. Please try again.');
     }
 
-    navigate("/");
+
   };
 
   return (
@@ -79,7 +83,7 @@ const SignIn = () => {
               secureTextEntry
             />
             <Pressable style={styles.button} onPress={handleSubmit}>
-              <Text color="textThird" fontSize="subheading">Submit</Text>
+              <Text color="textThird" fontSize="subheading">Sign In</Text>
             </Pressable>
           </>
         )}

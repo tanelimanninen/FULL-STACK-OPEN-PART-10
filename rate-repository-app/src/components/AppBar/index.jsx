@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary
   },
   signOut: {
-    paddingStart: 12
+    marginStart: 6,
+    marginEnd: 10
   }
 });
 
@@ -30,8 +31,8 @@ const AppBar = () => {
   const apolloClient = useApolloClient();
 
   const handleSignOut = async () => {
+    //REMOVE CURRENT ACCESS TOKEN
     await authStorage.removeAccessToken();
-
     //RESET APOLLO CLIENT STORE
     await apolloClient.resetStore();
 
@@ -42,13 +43,23 @@ const AppBar = () => {
     <View style={styles.container}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <AppBarTab text="Repositories" route="/" />
+        
+        {data?.me && (
+          <>
+            <AppBarTab text="Create Review" route="/create-review" />
+            <AppBarTab text="My Reviews" route="/my-reviews" />
+          </>
+        )}
 
         {data?.me ? (
           <Pressable onPress={handleSignOut}>
             <Text fontWeight="bold" fontSize="heading" style={styles.signOut}>Sign Out</Text>
           </Pressable>
           ) : (
-            <AppBarTab text="Sign In" route="/sign-in" />
+            <>
+              <AppBarTab text="Sign In" route="/sign-in" />
+              <AppBarTab text="Sign Up" route="/sign-up" />
+            </>
         )}
       </ScrollView>
       
